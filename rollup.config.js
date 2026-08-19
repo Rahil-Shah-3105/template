@@ -5,18 +5,23 @@ import terser from '@rollup/plugin-terser';
 import resolve from '@rollup/plugin-node-resolve';
 import livereload from 'rollup-plugin-livereload';
 import css from 'rollup-plugin-css-only';
+const logger = console;
 
 const production = !process.env.ROLLUP_WATCH;
 
 function serve() {
+	logger.debug('>>> Entering serve()');
 	let server;
 
 	function toExit() {
+		logger.debug('>>> Entering toExit()');
 		if (server) server.kill(0);
+		logger.debug('<<< Exiting toExit()');
 	}
 
 	return {
 		writeBundle() {
+			logger.debug('>>> Entering writeBundle()');
 			if (server) return;
 			server = spawn('npm', ['run', 'start', '--', '--dev'], {
 				stdio: ['ignore', 'inherit', 'inherit'],
@@ -25,8 +30,10 @@ function serve() {
 
 			process.on('SIGTERM', toExit);
 			process.on('exit', toExit);
+			logger.debug('<<< Exiting writeBundle()');
 		}
 	};
+	logger.debug('<<< Exiting serve()');
 }
 
 export default {
