@@ -5,6 +5,7 @@ import terser from '@rollup/plugin-terser';
 import resolve from '@rollup/plugin-node-resolve';
 import livereload from 'rollup-plugin-livereload';
 import css from 'rollup-plugin-css-only';
+const logger = console;
 
 const production = !process.env.ROLLUP_WATCH;
 
@@ -23,6 +24,7 @@ function serve() {
 				shell: true
 			});
 
+			logger.info(`writeBundle(): SOC2-AUDIT [CC7.1]: System operations — State change recorded for the audit trail`, { "event.action": "writeBundle" });
 			process.on('SIGTERM', toExit);
 			process.on('exit', toExit);
 		}
